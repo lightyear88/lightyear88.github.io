@@ -1,0 +1,393 @@
+/* Typora's local GitHub / Night reading styles, adapted to Hugo markup. */
+@font-face {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../../fonts/open-sans/open-sans-v17-latin-ext_latin-regular.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Open Sans";
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../../fonts/open-sans/open-sans-v17-latin-ext_latin-italic.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("../../fonts/open-sans/open-sans-v17-latin-ext_latin-700.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "Open Sans";
+    font-style: italic;
+    font-weight: 700;
+    font-display: swap;
+    src: url("../../fonts/open-sans/open-sans-v17-latin-ext_latin-700italic.woff2") format("woff2");
+}
+
+:root {
+    --write-width: 800px; /* Typora #write: 860px including two 30px gutters. */
+    --reading-font: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", "Segoe UI Emoji", sans-serif;
+    --reading-heading-font: var(--reading-font);
+    --reading-mono: "Lucida Console", Consolas, "Courier", monospace;
+    --reading-leading: 1.6;
+    --reading-paper: #fff;
+    --reading-text: #333;
+    --reading-heading: #333;
+    --reading-muted: #777;
+    --reading-border: #dfe2e5;
+    --reading-rule: #eee;
+    --reading-wash: #f8f8f8;
+    --reading-inline-code: #f3f4f4;
+    --reading-link: #4183c4;
+    --syntax-keyword: #708;
+    --syntax-string: #a11;
+    --syntax-comment: #a50;
+    --syntax-number: #164;
+    --syntax-atom: #219;
+    --syntax-definition: #00f;
+    --syntax-operator: #981a1a;
+    --syntax-type: #30a;
+    --syntax-mark: #fff0bf;
+}
+
+:root[data-theme="dark"] {
+    --reading-font: "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", "Segoe UI Emoji", sans-serif;
+    --reading-heading-font: "Lucida Grande", Corbel, "Microsoft YaHei", sans-serif;
+    --reading-mono: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+    --reading-leading: 1.625;
+    --reading-paper: #363b40;
+    --reading-text: #b8bfc6;
+    --reading-heading: #dedede;
+    --reading-muted: #b8bfc6;
+    --reading-border: #474d54;
+    --reading-rule: #474d54;
+    --reading-wash: #333;
+    --reading-inline-code: #303438;
+    --reading-link: #6dc1e7;
+    --syntax-keyword: #c88fd0;
+    --syntax-string: #e38484;
+    --syntax-comment: #da924a;
+    --syntax-number: #b5cea8;
+    --syntax-atom: #b3a0f4;
+    --syntax-definition: #a4a4ff;
+    --syntax-operator: #b8bfc6;
+    --syntax-type: #8dcbec;
+    --syntax-mark: #4b493e;
+}
+
+@media (min-width: 1400px) {
+    :root { --write-width: 964px; }
+}
+
+@media (min-width: 1800px) {
+    :root { --write-width: 1140px; }
+}
+
+body:has(.post-layout) {
+    background: var(--reading-paper);
+}
+
+.main:has(.post-layout) {
+    max-width: calc(var(--write-width) + 2 * var(--gap));
+}
+
+.post-layout {
+    margin-inline: auto;
+    font: 16px/var(--reading-leading) var(--reading-font);
+    color: var(--reading-text);
+    -webkit-font-smoothing: antialiased;
+}
+
+.post-layout .post-single {
+    min-width: 0;
+    grid-area: article;
+}
+
+.post-layout .post-title {
+    margin: 1rem 0;
+    font: 700 2.25em/1.2 var(--reading-heading-font);
+    color: var(--reading-heading);
+    border-bottom: 1px solid var(--reading-rule);
+}
+
+.post-layout .post-description {
+    color: var(--reading-muted);
+    font-size: 1rem;
+    line-height: inherit;
+}
+
+.post-layout .post-content {
+    margin: 1.6rem 0 2rem;
+    color: inherit;
+    overflow-wrap: break-word;
+    --border: var(--reading-border);
+    --code-block-bg: var(--reading-wash);
+}
+
+.post-content :is(h1, h2, h3, h4, h5, h6) {
+    margin: 1rem 0;
+    font-family: var(--reading-heading-font);
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--reading-heading);
+    scroll-margin-top: 1.25rem;
+}
+
+.post-content :is(h1, h2) {
+    border-bottom: 1px solid var(--reading-rule);
+}
+
+.post-content h1 { font-size: 2.25em; line-height: 1.2; }
+.post-content h2 { font-size: 1.75em; line-height: 1.225; }
+.post-content h3 { font-size: 1.5em; line-height: 1.43; }
+.post-content h4 { font-size: 1.25em; }
+.post-content h5,
+.post-content h6 { font-size: 1em; }
+
+[data-theme="dark"] .post-layout .post-title,
+[data-theme="dark"] .post-content h1 {
+    font-size: 2.5em;
+    line-height: 1.1;
+    font-weight: 400;
+    letter-spacing: -0.035em;
+    border: 0;
+}
+
+[data-theme="dark"] .post-content h2 {
+    font-size: 1.63em;
+    line-height: 1.15;
+    border: 0;
+}
+
+[data-theme="dark"] .post-content h3 {
+    font-size: 1.17em;
+    line-height: 1.28;
+}
+
+.post-content :is(p, ul, ol, dl, figure):not(:last-child) {
+    margin-bottom: 0.8em;
+}
+
+.post-content :is(ul, ol) {
+    padding-inline-start: 30px;
+}
+
+.post-content li {
+    margin-top: 0;
+}
+
+.post-content li > :is(ul, ol) {
+    margin-block: 0;
+}
+
+.post-content a:not(.anchor) {
+    color: var(--reading-link);
+    text-decoration: none;
+}
+
+.post-content a:not(.anchor):is(:hover, :focus-visible) {
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+}
+
+.post-content blockquote {
+    margin: 0.8em 0;
+    padding-inline: 15px;
+    border-inline-start: 4px solid var(--reading-border);
+    color: var(--reading-muted);
+}
+
+[data-theme="dark"] .post-content blockquote {
+    padding-inline-start: 1.875rem;
+    border-inline-start-width: 2px;
+}
+
+.post-content hr {
+    margin: 16px 0;
+    background: var(--reading-border);
+}
+
+.post-content table:not(.highlight table, .gist table) {
+    max-width: 100%;
+    margin-block: 0.8em;
+    word-break: normal;
+}
+
+.post-content table:not(.highlight table, .gist table) :is(th, td) {
+    border: 1px solid var(--reading-border);
+    padding: 6px 13px;
+    line-height: inherit;
+}
+
+.post-content table:not(.highlight table, .gist table) :is(thead, tbody tr:nth-child(even)) {
+    background: var(--reading-wash);
+}
+
+.post-content code {
+    font-family: var(--reading-mono);
+    font-size: 0.9em;
+}
+
+.post-content :not(pre) > code {
+    padding: 0 2px;
+    border: 1px solid var(--reading-border);
+    border-radius: 3px;
+    background: var(--reading-inline-code);
+}
+
+.post-content :is(.highlight:not(table), pre:not(.highlight pre)) {
+    margin: 15px 0;
+    border: 1px solid var(--reading-border);
+    border-radius: 3px;
+}
+
+.post-content pre code {
+    color: var(--reading-text);
+    line-height: inherit;
+    tab-size: 4;
+    word-break: normal;
+    overflow-wrap: normal;
+    border-radius: 3px;
+}
+
+/* Chroma token classes use the colors of Typora's CodeMirror themes. */
+.post-content .chroma { color: var(--reading-text); }
+.post-content .chroma :is(.k, .kd, .kn, .kp, .kr, .kt) { color: var(--syntax-keyword); }
+.post-content .chroma :is(.s, .s1, .s2, .sa, .sb, .sc, .se, .sh, .si, .sr, .ss, .dl) { color: var(--syntax-string); }
+.post-content .chroma :is(.c, .c1, .ch, .cm, .cp, .cpf, .cs) { color: var(--syntax-comment); }
+.post-content .chroma :is(.m, .mb, .mf, .mh, .mi, .mo, .il) { color: var(--syntax-number); }
+.post-content .chroma :is(.kc, .na) { color: var(--syntax-atom); }
+.post-content .chroma :is(.nf, .fm, .nd) { color: var(--syntax-definition); }
+.post-content .chroma :is(.o, .ow, .err) { color: var(--syntax-operator); }
+.post-content .chroma :is(.nb, .bp, .nc, .ne, .nt) { color: var(--syntax-type); }
+.post-content .chroma :is(.ln, .lnt) { color: var(--reading-muted); }
+.post-content .chroma .hl { background: var(--syntax-mark); }
+
+.post-sidebar {
+    color: var(--reading-muted);
+    font-size: 0.875rem;
+    line-height: 1.55;
+}
+
+.post-sidebar summary {
+    color: var(--reading-heading);
+    font-weight: 700;
+}
+
+.post-sidebar nav {
+    max-height: min(58vh, 30rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    margin-top: 0.6rem;
+}
+
+.post-sidebar ul {
+    margin: 0;
+    list-style: none;
+}
+
+.post-sidebar li > ul {
+    padding-inline-start: 0.8em;
+}
+
+.post-sidebar a {
+    display: block;
+    padding: 0.3em 0.45em;
+    border-radius: 4px;
+    color: var(--reading-text);
+    overflow-wrap: anywhere;
+}
+
+.post-sidebar a:is(:hover, :focus-visible, [aria-current="page"]) {
+    background: var(--reading-wash);
+    color: var(--reading-link);
+}
+
+.post-sidebar a[aria-current="page"] {
+    font-weight: 700;
+}
+
+.post-sidebar .topic-index {
+    color: var(--reading-muted);
+    font-size: 0.82rem;
+    margin-bottom: 0.3rem;
+}
+
+@media (min-width: 75rem) {
+    .main:has(.post-sidebar) {
+        max-width: calc(var(--write-width) + 30rem + 2 * var(--gap));
+    }
+
+    .post-layout:has(.post-sidebar) {
+        display: grid;
+        grid-template-columns: 12rem minmax(0, var(--write-width)) 12rem;
+        grid-template-areas: "topics article outline";
+        justify-content: center;
+        gap: clamp(1.5rem, 2.5vw, 3rem);
+    }
+
+    .post-sidebar {
+        position: sticky;
+        top: 1.5rem;
+        align-self: start;
+        margin-top: 1.5rem;
+    }
+
+    .post-topics {
+        grid-area: topics;
+        padding-inline-end: 1rem;
+        border-inline-end: 1px solid var(--reading-border);
+    }
+
+    .post-outline {
+        grid-area: outline;
+        padding-inline-start: 1rem;
+        border-inline-start: 1px solid var(--reading-border);
+    }
+
+    .sidebar-mobile-label {
+        display: none;
+    }
+}
+
+@media (width < 75rem) {
+    .post-layout:has(.post-sidebar) {
+        padding-bottom: 3rem;
+    }
+
+    .post-sidebar {
+        position: fixed;
+        bottom: max(0.9rem, env(safe-area-inset-bottom));
+        z-index: 5;
+        max-width: min(21rem, calc(100vw - 1.8rem));
+        padding: 0.55rem 0.85rem;
+        background: var(--reading-paper);
+        border: 1px solid var(--reading-border);
+        border-radius: 8px;
+        box-shadow: 0 3px 16px #0002;
+    }
+
+    .post-topics { inset-inline-start: 0.9rem; }
+    .post-outline { inset-inline-end: 0.9rem; }
+    .post-sidebar:has(details[open]) { z-index: 100; }
+    .sidebar-desktop-label { display: none; }
+}
+
+@media (width < 40rem) {
+    .post-layout .post-title,
+    [data-theme="dark"] .post-layout .post-title {
+        font-size: 1.85em;
+    }
+}
+
+@media print {
+    .post-sidebar { display: none; }
+    .post-layout:has(.post-sidebar) { display: block; }
+}

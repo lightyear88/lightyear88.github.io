@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
-    <title>我的博客</title>
+    <title>山窗手记</title>
     <link>http://localhost:1313/</link>
-    <description>Recent content on 我的博客</description>
+    <description>Recent content on 山窗手记</description>
     <generator>Hugo</generator>
-    <language>zh-cn</language>
+    <language>zh-CN</language>
     <lastBuildDate>Thu, 12 Nov 2026 15:44:48 +0800</lastBuildDate>
     <atom:link href="http://localhost:1313/index.xml" rel="self" type="application/rss+xml" />
     <item>
@@ -15,6 +15,13 @@
       <guid>http://localhost:1313/posts/my-first-post/</guid>
       <description>&lt;h2 id=&#34;你好世界&#34;&gt;你好世界&lt;/h2&gt;
 &lt;p&gt;这是我的第一篇文章，Markdown 真好用！&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>履痕 TrailMark：旅行足迹系统的后端设计</title>
+      <link>http://localhost:1313/posts/trailmark-backend/</link>
+      <pubDate>Thu, 12 Nov 2026 00:00:00 +0800</pubDate>
+      <guid>http://localhost:1313/posts/trailmark-backend/</guid>
+      <description>以履痕的 Java 源码为例，介绍地图足迹系统的分层、数据模型、坐标约定、接口兼容与照片存储。</description>
     </item>
   </channel>
 </rss>

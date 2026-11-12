@@ -1,4 +1,64 @@
 baseURL = "https://lightyear88.github.io/"
-languageCode = "zh-cn"
-title = "我的博客"
+locale = "zh-CN"
+defaultContentLanguage = "zh"
+title = "山窗手记"
 theme = "PaperMod"
+hasCJKLanguage = true
+
+[pagination]
+pagerSize = 8
+
+[markup.tableOfContents]
+startLevel = 2
+endLevel = 4
+
+[markup.highlight]
+noClasses = false
+
+[params]
+mainSections = ["posts"]
+description = "技术实践、项目笔记与日常随想。"
+dateFormat = "2006年1月2日"
+defaultTheme = "auto"
+showToc = true
+tocOpen = true
+showReadingTime = true
+showBreadCrumbs = true
+showPostNavLinks = true
+showCodeCopyButtons = true
+
+[params.homeInfoParams]
+title = "山窗手记"
+content = "技术实践、项目笔记与日常随想。"
+verse = "行到水穷处，坐看云起时。"
+verseSource = "王维《终南别业》"
+image = "images/ink-mountains.webp"
+
+[outputs]
+home = ["HTML", "RSS", "JSON"]
+
+[[menus.main]]
+name = "首页"
+pageRef = "/"
+weight = 10
+
+[[menus.main]]
+name = "文章"
+pageRef = "/posts"
+weight = 20
+
+[[menus.main]]
+name = "归档"
+pageRef = "/archives"
+weight = 30
+
+[[menus.main]]
+name = "标签"
+pageRef = "/tags"
+weight = 40
+
+[[menus.main]]
+identifier = "search"
+name = "搜索"
+pageRef = "/search"
+weight = 50

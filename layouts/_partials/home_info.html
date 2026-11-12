@@ -1,0 +1,30 @@
+{{- with site.Params.homeInfoParams }}
+<section class="journal-hero" aria-labelledby="journal-title">
+    {{- with .image }}
+    <img class="journal-hero-art" src="{{ . | relURL }}" alt="" width="1440" height="960" fetchpriority="high" decoding="async">
+    {{- end }}
+    <div class="journal-hero-content">
+        <h1 id="journal-title">{{ .title | default site.Title }}</h1>
+        {{- with .content }}
+        <p class="journal-intro">{{ . }}</p>
+        {{- end }}
+        {{- with .verse }}
+        <figure class="journal-verse">
+            <blockquote><p>{{ . }}</p></blockquote>
+            {{- with $.Site.Params.homeInfoParams.verseSource }}
+            <figcaption>{{ . }}</figcaption>
+            {{- end }}
+        </figure>
+        {{- end }}
+        {{- if site.Params.socialIcons }}
+        {{- partial "social_icons.html" (dict "align" .alignSocialIconsTo) }}
+        {{- end }}
+    </div>
+</section>
+<div class="journal-feed-heading">
+    <h2>最新文章</h2>
+    {{- with site.GetPage "/archives" }}
+    <a href="{{ .RelPermalink }}">查看归档 <span aria-hidden="true">→</span></a>
+    {{- end }}
+</div>
+{{- end }}
