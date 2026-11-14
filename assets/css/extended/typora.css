@@ -1,4 +1,18 @@
-/* Typora's local GitHub / Night reading styles, adapted to Hugo markup. */
+/* ==========================================================================
+   阅读样式 —— 以 Typora（GitHub 主题）的排版尺度为基准
+   --------------------------------------------------------------------------
+   1. 字体与变量   2. 版心   3. 正文   4. 标题   5. 块级元素
+   6. 行内代码与代码块   7. 语法高亮   8. 侧栏   9. 响应式与打印
+
+   跨平台一致性要点：
+   - 西文走自托管的 Open Sans，代码走自托管的 JetBrains Mono，
+     macOS 与 Windows 拿到的是同一份字形，不再依赖系统字体。
+   - 中文字形无法内嵌（体积太大），已按「苹方 / 微软雅黑」显式排队，
+     并用固定的 px 字号 + 无单位行高锁定行盒，避免两端行距漂移。
+   ========================================================================== */
+
+/* ---------- 1. 字体与变量 ------------------------------------------------ */
+
 @font-face {
     font-family: "Open Sans";
     font-style: normal;
@@ -31,67 +45,102 @@
     src: url("../../fonts/open-sans/open-sans-v17-latin-ext_latin-700italic.woff2") format("woff2");
 }
 
+/* 代码字体：只内嵌拉丁字母（约 20KB × 3），中文注释回落到正文字体。 */
+@font-face {
+    font-family: "JetBrains Mono";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../../fonts/jetbrains-mono/jetbrains-mono-latin-400-normal.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    font-style: italic;
+    font-weight: 400;
+    font-display: swap;
+    src: url("../../fonts/jetbrains-mono/jetbrains-mono-latin-400-italic.woff2") format("woff2");
+}
+
+@font-face {
+    font-family: "JetBrains Mono";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url("../../fonts/jetbrains-mono/jetbrains-mono-latin-700-normal.woff2") format("woff2");
+}
+
 :root {
-    --write-width: 800px; /* Typora #write: 860px including two 30px gutters. */
-    --reading-font: "Open Sans", "Clear Sans", "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", "Segoe UI Emoji", sans-serif;
+    /* 版心：Typora 的 #write 为 860px，这里取等宽。 */
+    --write-width: 860px;
+
+    /* 西文用自托管字体保证两端一致；中文按平台显式排队。 */
+    --reading-font: "Open Sans", -apple-system, BlinkMacSystemFont, "Segoe UI",
+        "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Source Han Sans SC",
+        "Noto Sans CJK SC", sans-serif;
     --reading-heading-font: var(--reading-font);
-    --reading-mono: "Lucida Console", Consolas, "Courier", monospace;
-    --reading-leading: 1.6;
-    --reading-paper: #fff;
-    --reading-text: #333;
-    --reading-heading: #333;
-    --reading-muted: #777;
-    --reading-border: #dfe2e5;
-    --reading-rule: #eee;
-    --reading-wash: #f8f8f8;
-    --reading-inline-code: #f3f4f4;
-    --reading-link: #4183c4;
-    --syntax-keyword: #708;
-    --syntax-string: #a11;
-    --syntax-comment: #a50;
-    --syntax-number: #164;
-    --syntax-atom: #219;
-    --syntax-definition: #00f;
-    --syntax-operator: #981a1a;
-    --syntax-type: #30a;
-    --syntax-mark: #fff0bf;
+    --reading-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+        Consolas, "Liberation Mono", "PingFang SC", "Microsoft YaHei", monospace;
+
+    /* 字号与行距全部写死，避免字体自身 metrics 影响行盒高度。 */
+    --reading-size: 16px;
+    --reading-leading: 1.78;
+    --reading-code-size: 0.875rem;
+    --reading-code-leading: 1.7;
+
+    --reading-paper: #ffffff;
+    --reading-text: #333333;
+    --reading-heading: #1f2328;
+    --reading-muted: #6a737d;
+    --reading-border: #e3e3e3;
+    --reading-rule: #eaeaea;
+    --reading-wash: #f7f7f7;
+    --reading-inline-code: #f2f3f5;
+    --reading-link: #2f6fb5;
+
+    --syntax-text: #333333;
+    --syntax-comment: #969896;
+    --syntax-keyword: #a71d5d;
+    --syntax-string: #183691;
+    --syntax-number: #0086b3;
+    --syntax-function: #795da3;
+    --syntax-type: #0086b3;
+    --syntax-tag: #63a35c;
+    --syntax-mark: #fff5b1;
 }
 
 :root[data-theme="dark"] {
-    --reading-font: "Helvetica Neue", Helvetica, Arial, "Microsoft YaHei", "Segoe UI Emoji", sans-serif;
-    --reading-heading-font: "Lucida Grande", Corbel, "Microsoft YaHei", sans-serif;
-    --reading-mono: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
-    --reading-leading: 1.625;
     --reading-paper: #363b40;
-    --reading-text: #b8bfc6;
-    --reading-heading: #dedede;
-    --reading-muted: #b8bfc6;
+    --reading-text: #ccd3da;
+    --reading-heading: #e6eaee;
+    --reading-muted: #98a1a9;
     --reading-border: #474d54;
-    --reading-rule: #474d54;
-    --reading-wash: #333;
-    --reading-inline-code: #303438;
-    --reading-link: #6dc1e7;
-    --syntax-keyword: #c88fd0;
-    --syntax-string: #e38484;
-    --syntax-comment: #da924a;
-    --syntax-number: #b5cea8;
-    --syntax-atom: #b3a0f4;
-    --syntax-definition: #a4a4ff;
-    --syntax-operator: #b8bfc6;
-    --syntax-type: #8dcbec;
-    --syntax-mark: #4b493e;
+    --reading-rule: #454b52;
+    --reading-wash: #2f3439;
+    --reading-inline-code: #3b4047;
+    --reading-link: #6cb6ff;
+
+    --syntax-text: #ccd3da;
+    --syntax-comment: #8b949e;
+    --syntax-keyword: #c792ea;
+    --syntax-string: #a5d6a7;
+    --syntax-number: #f0a67a;
+    --syntax-function: #82aaff;
+    --syntax-type: #89ddff;
+    --syntax-tag: #7ee0b0;
+    --syntax-mark: #4a4632;
 }
 
-@media (min-width: 1400px) {
-    :root { --write-width: 964px; }
-}
-
-@media (min-width: 1800px) {
-    :root { --write-width: 1140px; }
-}
+/* ---------- 2. 版心 ------------------------------------------------------ */
 
 body:has(.post-layout) {
     background: var(--reading-paper);
+}
+
+/* 顶栏跟着阅读底色走，避免出现横向接缝 */
+body:has(.post-layout) .header {
+    background: var(--reading-paper);
+    border-bottom-color: var(--reading-rule);
 }
 
 .main:has(.post-layout) {
@@ -100,9 +149,12 @@ body:has(.post-layout) {
 
 .post-layout {
     margin-inline: auto;
-    font: 16px/var(--reading-leading) var(--reading-font);
+    font-family: var(--reading-font);
+    font-size: var(--reading-size);
+    line-height: var(--reading-leading);
     color: var(--reading-text);
-    -webkit-font-smoothing: antialiased;
+    /* 让中英文混排自动补一点间距（Chrome 123+），不支持时自动忽略。 */
+    text-autospace: normal;
 }
 
 .post-layout .post-single {
@@ -110,182 +162,416 @@ body:has(.post-layout) {
     grid-area: article;
 }
 
+/* ---------- 3. 正文 ------------------------------------------------------ */
+
 .post-layout .post-title {
-    margin: 1rem 0;
-    font: 700 2.25em/1.2 var(--reading-heading-font);
+    margin: 1.25rem 0 0;
+    font-family: var(--reading-heading-font);
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    letter-spacing: -0.01em;
     color: var(--reading-heading);
-    border-bottom: 1px solid var(--reading-rule);
 }
 
 .post-layout .post-description {
+    margin-top: 0.75rem;
     color: var(--reading-muted);
-    font-size: 1rem;
-    line-height: inherit;
+    font-size: 0.9375rem;
+    line-height: 1.65;
+}
+
+.post-layout .post-meta {
+    margin-top: 0.75rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--reading-rule);
+    font-size: 0.8125rem;
 }
 
 .post-layout .post-content {
-    margin: 1.6rem 0 2rem;
+    margin: 1.75rem 0 2.5rem;
     color: inherit;
+    /* 正文允许长单词断行，但不能像 word-break: break-all 那样把英文词拆散。 */
+    word-break: normal;
     overflow-wrap: break-word;
     --border: var(--reading-border);
     --code-block-bg: var(--reading-wash);
 }
 
-.post-content :is(h1, h2, h3, h4, h5, h6) {
-    margin: 1rem 0;
-    font-family: var(--reading-heading-font);
-    font-weight: 700;
-    line-height: 1.4;
-    color: var(--reading-heading);
-    scroll-margin-top: 1.25rem;
+.post-content :is(p, ul, ol, dl, figure, table, .highlight):not(:last-child) {
+    margin-bottom: 1.1em;
 }
 
-.post-content :is(h1, h2) {
+.post-content p {
+    margin-block: 0 1.1em;
+    text-wrap: pretty;
+}
+
+/* ---------- 4. 标题 ------------------------------------------------------ */
+
+.post-content :is(h1, h2, h3, h4, h5, h6) {
+    margin: 1.9em 0 0.75em;
+    font-family: var(--reading-heading-font);
+    font-weight: 700;
+    line-height: 1.35;
+    letter-spacing: -0.005em;
+    color: var(--reading-heading);
+    scroll-margin-top: 1.5rem;
+}
+
+.post-content :is(h1, h2, h3) {
+    text-wrap: balance;
+}
+
+.post-content h1 { font-size: 1.75em; }
+.post-content h2 { font-size: 1.5em; }
+.post-content h3 { font-size: 1.25em; }
+.post-content h4 { font-size: 1.0625em; }
+.post-content h5,
+.post-content h6 {
+    font-size: 1em;
+    color: var(--reading-muted);
+}
+
+.post-content h2 {
+    padding-bottom: 0.3em;
     border-bottom: 1px solid var(--reading-rule);
 }
 
-.post-content h1 { font-size: 2.25em; line-height: 1.2; }
-.post-content h2 { font-size: 1.75em; line-height: 1.225; }
-.post-content h3 { font-size: 1.5em; line-height: 1.43; }
-.post-content h4 { font-size: 1.25em; }
-.post-content h5,
-.post-content h6 { font-size: 1em; }
-
-[data-theme="dark"] .post-layout .post-title,
-[data-theme="dark"] .post-content h1 {
-    font-size: 2.5em;
-    line-height: 1.1;
-    font-weight: 400;
-    letter-spacing: -0.035em;
-    border: 0;
-}
-
-[data-theme="dark"] .post-content h2 {
-    font-size: 1.63em;
-    line-height: 1.15;
-    border: 0;
-}
-
-[data-theme="dark"] .post-content h3 {
-    font-size: 1.17em;
-    line-height: 1.28;
-}
-
-.post-content :is(p, ul, ol, dl, figure):not(:last-child) {
-    margin-bottom: 0.8em;
-}
-
-.post-content :is(ul, ol) {
-    padding-inline-start: 30px;
-}
-
-.post-content li {
+.post-content :is(h1, h2, h3, h4, h5, h6):first-child {
     margin-top: 0;
 }
 
+/* 鼠标移到标题上才出现的锚点 */
+.post-content .anchor {
+    margin-inline-start: 0.4em;
+    font-weight: 400;
+    color: var(--reading-border);
+    text-decoration: none;
+}
+
+.post-content :is(h1, h2, h3, h4, h5, h6):hover .anchor {
+    color: var(--reading-muted);
+}
+
+/* ---------- 5. 块级元素 -------------------------------------------------- */
+
+.post-content :is(ul, ol) {
+    padding-inline-start: 1.6em;
+}
+
+.post-content li {
+    margin-block: 0.25em;
+}
+
+.post-content li::marker {
+    color: var(--reading-muted);
+}
+
 .post-content li > :is(ul, ol) {
-    margin-block: 0;
+    margin-block: 0.25em;
+    padding-inline-start: 1.4em;
+}
+
+.post-content li > p {
+    margin-bottom: 0.4em;
 }
 
 .post-content a:not(.anchor) {
     color: var(--reading-link);
     text-decoration: none;
+    border-bottom: 1px solid color-mix(in srgb, var(--reading-link) 32%, transparent);
 }
 
 .post-content a:not(.anchor):is(:hover, :focus-visible) {
-    text-decoration: underline;
-    text-underline-offset: 0.18em;
+    border-bottom-color: currentColor;
 }
 
-.post-content blockquote {
-    margin: 0.8em 0;
-    padding-inline: 15px;
-    border-inline-start: 4px solid var(--reading-border);
+.post-content strong {
+    font-weight: 700;
+    color: var(--reading-heading);
+}
+
+.post-content em {
+    font-style: italic;
+}
+
+.post-content del {
     color: var(--reading-muted);
 }
 
-[data-theme="dark"] .post-content blockquote {
-    padding-inline-start: 1.875rem;
-    border-inline-start-width: 2px;
+.post-content mark {
+    padding: 0 0.15em;
+    border-radius: 2px;
+    background: var(--syntax-mark);
+    color: inherit;
+}
+
+.post-content blockquote {
+    margin: 1.25em 0;
+    padding: 0.1em 0 0.1em 1.1em;
+    border-inline-start: 3px solid var(--reading-border);
+    color: var(--reading-muted);
+}
+
+.post-content blockquote > :last-child {
+    margin-bottom: 0;
 }
 
 .post-content hr {
-    margin: 16px 0;
-    background: var(--reading-border);
+    height: 1px;
+    margin: 2.25em 0;
+    border: 0;
+    background: var(--reading-rule);
 }
 
-.post-content table:not(.highlight table, .gist table) {
+.post-content img {
+    display: block;
     max-width: 100%;
-    margin-block: 0.8em;
+    margin: 1.25em auto;
+    border-radius: 6px;
+}
+
+.post-content figcaption {
+    margin-top: 0.5em;
+    color: var(--reading-muted);
+    font-size: 0.875rem;
+    text-align: center;
+}
+
+.post-content kbd {
+    padding: 0.1em 0.4em;
+    border: 1px solid var(--reading-border);
+    border-bottom-width: 2px;
+    border-radius: 4px;
+    background: var(--reading-wash);
+    font-family: var(--reading-mono);
+    font-size: 0.8125em;
+}
+
+/* 表格：Typora 的浅描边 + 表头底色，单元格留白放宽 */
+.post-content table:not(.highlight table, .gist table) {
+    width: auto;
+    max-width: 100%;
+    margin-block: 1.25em;
+    border-collapse: collapse;
+    border-spacing: 0;
+    font-size: 0.9375em;
     word-break: normal;
 }
 
 .post-content table:not(.highlight table, .gist table) :is(th, td) {
+    padding: 0.5em 0.85em;
     border: 1px solid var(--reading-border);
-    padding: 6px 13px;
-    line-height: inherit;
+    line-height: 1.6;
+    text-align: start;
 }
 
-.post-content table:not(.highlight table, .gist table) :is(thead, tbody tr:nth-child(even)) {
+.post-content table:not(.highlight table, .gist table) th {
     background: var(--reading-wash);
+    font-weight: 700;
+    color: var(--reading-heading);
 }
+
+.post-content table:not(.highlight table, .gist table) tbody tr:nth-child(even) {
+    background: color-mix(in srgb, var(--reading-wash) 55%, transparent);
+}
+
+.post-content table:not(.highlight table, .gist table) td code {
+    white-space: nowrap;
+}
+
+/* ---------- 6. 行内代码与代码块 ------------------------------------------ */
 
 .post-content code {
     font-family: var(--reading-mono);
-    font-size: 0.9em;
+    font-size: var(--reading-code-size);
+    font-variant-ligatures: none;
+    letter-spacing: 0;
 }
 
 .post-content :not(pre) > code {
-    padding: 0 2px;
+    padding: 0.15em 0.4em;
     border: 1px solid var(--reading-border);
-    border-radius: 3px;
+    border-radius: 4px;
     background: var(--reading-inline-code);
-}
-
-.post-content :is(.highlight:not(table), pre:not(.highlight pre)) {
-    margin: 15px 0;
-    border: 1px solid var(--reading-border);
-    border-radius: 3px;
-}
-
-.post-content pre code {
     color: var(--reading-text);
-    line-height: inherit;
+    white-space: break-spaces;
+}
+
+/* 外层：负责底纹、圆角、描边；内层 pre/code 只负责文字 */
+.post-content .highlight:not(table) {
+    margin-block: 1.4em;
+    border: 1px solid var(--reading-border);
+    border-radius: 8px;
+    background: var(--reading-wash);
+    overflow: hidden;
+}
+
+/* 极少见的情况：手写的 <pre> 没被 chroma 包起来 */
+.post-content > pre {
+    margin-block: 1.4em;
+    padding: 1rem 1.15rem;
+    border: 1px solid var(--reading-border);
+    border-radius: 8px;
+    background: var(--reading-wash);
+    overflow-x: auto;
+}
+
+.post-content .highlight pre.chroma {
+    margin: 0;
+    padding: 0;
+    background: transparent !important;
+}
+
+.post-content .highlight pre.chroma code {
+    display: block;
+    padding: 1rem 1.15rem;
+    background: transparent !important;
+    border: 0;
+    border-radius: 0;
+    color: var(--syntax-text);
+    /* 关键：行高固定，两端的代码块行距才会一致 */
+    font-size: var(--reading-code-size);
+    line-height: var(--reading-code-leading);
     tab-size: 4;
+    -moz-tab-size: 4;
     word-break: normal;
     overflow-wrap: normal;
-    border-radius: 3px;
+    white-space: pre;
+    overflow-x: auto;
+    overscroll-behavior-x: contain;
 }
 
-/* Chroma token classes use the colors of Typora's CodeMirror themes. */
-.post-content .chroma { color: var(--reading-text); }
-.post-content .chroma :is(.k, .kd, .kn, .kp, .kr, .kt) { color: var(--syntax-keyword); }
-.post-content .chroma :is(.s, .s1, .s2, .sa, .sb, .sc, .se, .sh, .si, .sr, .ss, .dl) { color: var(--syntax-string); }
-.post-content .chroma :is(.c, .c1, .ch, .cm, .cp, .cpf, .cs) { color: var(--syntax-comment); }
-.post-content .chroma :is(.m, .mb, .mf, .mh, .mi, .mo, .il) { color: var(--syntax-number); }
-.post-content .chroma :is(.kc, .na) { color: var(--syntax-atom); }
-.post-content .chroma :is(.nf, .fm, .nd) { color: var(--syntax-definition); }
-.post-content .chroma :is(.o, .ow, .err) { color: var(--syntax-operator); }
-.post-content .chroma :is(.nb, .bp, .nc, .ne, .nt) { color: var(--syntax-type); }
-.post-content .chroma :is(.ln, .lnt) { color: var(--reading-muted); }
-.post-content .chroma .hl { background: var(--syntax-mark); }
+/* chroma 的每一行；改成块级，避免 flex 把行内空白吃掉 */
+.post-content .chroma .line {
+    display: block;
+    min-height: calc(var(--reading-code-size) * var(--reading-code-leading));
+}
+
+.post-content .chroma .hl {
+    display: block;
+    margin-inline: -1.15rem;
+    padding-inline: 1.15rem;
+    background: var(--syntax-mark);
+}
+
+.post-content .chroma :is(.ln, .lnt) {
+    display: inline-block;
+    min-width: 2.5em;
+    margin-inline-end: 1em;
+    color: var(--reading-muted);
+    text-align: end;
+    user-select: none;
+}
+
+/* 复制按钮：跟随主题，圆角对齐 */
+.post-content .highlight .copy-code,
+.post-content pre .copy-code {
+    top: 0.5rem;
+    right: 0.5rem;
+    padding: 0.15rem 0.5rem;
+    border: 1px solid var(--reading-border);
+    border-radius: 5px;
+    background: var(--reading-paper);
+    color: var(--reading-muted);
+    font-family: var(--reading-font);
+    font-size: 0.75rem;
+    opacity: 0;
+    transition: opacity 140ms ease;
+}
+
+.post-content :is(div.highlight, pre):hover .copy-code {
+    opacity: 1;
+}
+
+/* ---------- 7. 语法高亮 -------------------------------------------------- */
+
+.post-content .chroma {
+    color: var(--syntax-text);
+    background: transparent !important;
+}
+
+.post-content .chroma .x { color: var(--syntax-text); }
+.post-content .chroma :is(.err, .gd) { color: #c0392b; }
+.post-content .chroma :is(.gi) { color: var(--syntax-tag); }
+
+/* 注释：中文注释用斜体会被浏览器强行倾斜，观感很差，这里只留颜色 */
+.post-content .chroma :is(.c, .c1, .ch, .cm, .cp, .cpf, .cs, .cd) {
+    color: var(--syntax-comment);
+}
+
+/* 关键字 */
+.post-content .chroma :is(.k, .kc, .kd, .kn, .kp, .kr, .kt, .kv) {
+    color: var(--syntax-keyword);
+}
+
+/* 字符串 */
+.post-content .chroma :is(.s, .s1, .s2, .sa, .sb, .sc, .se, .sh, .si, .sr, .ss, .sx, .dl) {
+    color: var(--syntax-string);
+}
+
+/* 数字与常量 */
+.post-content .chroma :is(.m, .mb, .mf, .mh, .mi, .mo, .il, .no, .ne) {
+    color: var(--syntax-number);
+}
+
+/* 函数、属性、装饰器 */
+.post-content .chroma :is(.nf, .fm, .nd, .na, .py, .nl) {
+    color: var(--syntax-function);
+}
+
+/* 类型、内建、类 */
+.post-content .chroma :is(.nb, .bp, .nc, .nn, .nx, .nt, .ng) {
+    color: var(--syntax-type);
+}
+
+/* 标签、选择器 */
+.post-content .chroma :is(.nv, .vc, .vg, .vi, .vm, .se) {
+    color: var(--syntax-tag);
+}
+
+/* 运算符 */
+.post-content .chroma :is(.o, .ow, .p) {
+    color: var(--syntax-text);
+}
+
+/* ---------- 8. 侧栏、标签与翻页 ------------------------------------------ */
+
+/* 文章页沿用阅读底色，别用列表页那套米色 */
+.post-layout :is(.post-tags a, .paginav, .share-buttons) {
+    background: var(--reading-wash);
+    border-color: var(--reading-border);
+    color: var(--reading-muted);
+}
+
+.post-layout .post-tags a:hover,
+.post-layout .paginav a:hover {
+    background: var(--reading-border);
+}
+
+.post-layout .paginav .title {
+    color: var(--reading-muted);
+}
 
 .post-sidebar {
     color: var(--reading-muted);
-    font-size: 0.875rem;
-    line-height: 1.55;
+    font-size: 0.8125rem;
+    line-height: 1.6;
 }
 
 .post-sidebar summary {
     color: var(--reading-heading);
     font-weight: 700;
+    font-size: 0.8125rem;
+    letter-spacing: 0.02em;
 }
 
 .post-sidebar nav {
     max-height: min(58vh, 30rem);
     overflow-y: auto;
     overscroll-behavior: contain;
-    margin-top: 0.6rem;
+    margin-top: 0.5rem;
 }
 
 .post-sidebar ul {
@@ -294,13 +580,13 @@ body:has(.post-layout) {
 }
 
 .post-sidebar li > ul {
-    padding-inline-start: 0.8em;
+    padding-inline-start: 0.85em;
 }
 
 .post-sidebar a {
     display: block;
-    padding: 0.3em 0.45em;
-    border-radius: 4px;
+    padding: 0.3em 0.5em;
+    border-radius: 5px;
     color: var(--reading-text);
     overflow-wrap: anywhere;
 }
@@ -315,10 +601,12 @@ body:has(.post-layout) {
 }
 
 .post-sidebar .topic-index {
-    color: var(--reading-muted);
-    font-size: 0.82rem;
     margin-bottom: 0.3rem;
+    color: var(--reading-muted);
+    font-size: 0.75rem;
 }
+
+/* ---------- 9. 响应式与打印 ---------------------------------------------- */
 
 @media (min-width: 75rem) {
     .main:has(.post-sidebar) {
@@ -327,7 +615,7 @@ body:has(.post-layout) {
 
     .post-layout:has(.post-sidebar) {
         display: grid;
-        grid-template-columns: 12rem minmax(0, var(--write-width)) 12rem;
+        grid-template-columns: 11rem minmax(0, var(--write-width)) 11rem;
         grid-template-areas: "topics article outline";
         justify-content: center;
         gap: clamp(1.5rem, 2.5vw, 3rem);
@@ -337,7 +625,7 @@ body:has(.post-layout) {
         position: sticky;
         top: 1.5rem;
         align-self: start;
-        margin-top: 1.5rem;
+        margin-top: 1.25rem;
     }
 
     .post-topics {
@@ -359,7 +647,7 @@ body:has(.post-layout) {
 
 @media (width < 75rem) {
     .post-layout:has(.post-sidebar) {
-        padding-bottom: 3rem;
+        padding-bottom: 3.5rem;
     }
 
     .post-sidebar {
@@ -371,7 +659,7 @@ body:has(.post-layout) {
         background: var(--reading-paper);
         border: 1px solid var(--reading-border);
         border-radius: 8px;
-        box-shadow: 0 3px 16px #0002;
+        box-shadow: 0 3px 16px #0000001f;
     }
 
     .post-topics { inset-inline-start: 0.9rem; }
@@ -381,13 +669,17 @@ body:has(.post-layout) {
 }
 
 @media (width < 40rem) {
-    .post-layout .post-title,
-    [data-theme="dark"] .post-layout .post-title {
-        font-size: 1.85em;
+    .post-layout .post-title {
+        font-size: 1.6rem;
+    }
+
+    .post-content .highlight pre.chroma code {
+        padding: 0.85rem 0.9rem;
     }
 }
 
 @media print {
     .post-sidebar { display: none; }
     .post-layout:has(.post-sidebar) { display: block; }
+    .post-content :is(.highlight, pre) { break-inside: avoid; }
 }

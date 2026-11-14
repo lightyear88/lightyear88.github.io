@@ -1,1 +1,14 @@
+# Hugo 构建产物（由 GitHub Actions 在 CI 里生成，不需要提交）
 /public/
+/resources/_gen/
+.hugo_build.lock
+hugo_stats.json
+
+# 本机 / 编辑器
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# WorkBuddy 项目数据（记忆、缓存等）
+.workbuddy/
